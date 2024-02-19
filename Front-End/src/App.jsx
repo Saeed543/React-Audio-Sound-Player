@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
 import axios from "axios"
-import 'react-jinke-music-player/assets/index.css'
-// import ReactAudioPlayer from "react-audio-player"
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
 
 const App = () => {
   const [music, setmusic] = useState([])
-  const [currentMusicIndex, setCurrentMusicIndex] = useState(-1);
+  const [isRunning, CheckIsRunning] = useState(" ")
 
   useEffect(() => {
     fetchData();
@@ -33,15 +33,12 @@ const App = () => {
         responseType: 'blob' // Set responseType to 'blob' to handle binary data
       });
       const blobUrl = URL.createObjectURL(response.data); // Create a blob URL for the music file
-      const audio = new Audio(blobUrl); // Create an HTML Audio element
-      audio.play(); // Start playing the audio
+      CheckIsRunning(blobUrl)
+      // const audio = new Audio(blobUrl); // Create an HTML Audio element
+      // audio.play(); // Start playing the audio
     } catch (error) {
       console.error('Error playing music:', error);
     }
-  };
-
-  const handleMusicChange = (index) => {
-    setCurrentMusicIndex(index);
   };
 
   console.log(music)
@@ -52,8 +49,13 @@ const App = () => {
         <div key={index}>
           <p className='text-yellow-300'>{name}</p>
           <button className='text-yellow-300' onClick={() => handlePlayMusic(name)}>Play</button>
+
         </div>
       ))}
+      <AudioPlayer
+        className='fixed bottom-0'
+        src={isRunning}
+      />
     </div>
   )
 }
