@@ -64,8 +64,10 @@ const App = () => {
       <AudioPlayer
         className='fixed bottom-0'
         showSkipControls='true'
+        hasDefaultKeyBindings='true'
         src={isRunning}
         onClickNext={loop}
+        onEnded={loop}
       />
     </div>
   )
